@@ -18,7 +18,7 @@ const Main: React.FC = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('http://localhost:8787/api/categories');
+        const response = await axios.get('https://backend.todo-app.workers.dev/api/categories');
         setCategories(response.data.categories);
       } catch (e) {
         console.log('カテゴリーの取得に失敗しました', e);
