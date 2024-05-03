@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import liff from '@line/liff';
 import axios from 'axios';
-import { BACKEND_ROOT_URL } from '../activate/page';
 
 const Authenticate = () => {
   const router = useRouter();
@@ -19,7 +18,7 @@ const Authenticate = () => {
       const lineUserId = user.userId;
 
       try {
-        const response = await axios.post(`${BACKEND_ROOT_URL}/api/authenticate`, { lineUserId });
+        const response = await axios.post(`https://backend.todo-app.workers.dev/api/authenticate`, { lineUserId });
         if (response.data.authenticated) {
           // 認証成功の場合は、メインのアプリケーション画面にリダイレクト
           router.push('/main');
