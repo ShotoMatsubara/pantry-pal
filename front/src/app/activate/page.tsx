@@ -4,11 +4,15 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
 import liff from '@line/liff';
 
-const SignupPage: React.FC = () => {
-  const [userId, setUserId] = useState('');
+export const BACKEND_ROOT_URL = 'https://backend.todo-app.workers.dev';
 
+const Activate: React.FC = () => {
+  const [userId, setUserId] = useState('');
+  const router = useRouter();
   useEffect(() => {
     const initializeLiff = async () => {
       await liff.init({ liffId: '2000778309-LkXlYq6j' });
@@ -22,8 +26,16 @@ const SignupPage: React.FC = () => {
     initializeLiff();
   }, []);
 
-  const createUser = () => {
-    console.log('レコードが追加されました');
+  const createUser = async (e: any) => {
+    e.preventDefault();
+    try {
+      await axios.post(`${BACKEND_ROOT_URL}/api/users`, {
+        line_user_id: userId,
+      });
+      router.push('/activated');
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -53,4 +65,4 @@ const SignupPage: React.FC = () => {
   );
 };
 
-export default SignupPage;
+export default Activate;
