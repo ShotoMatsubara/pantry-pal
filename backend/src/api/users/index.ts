@@ -1,10 +1,10 @@
 import { Hono } from 'hono';
 import { Env } from '../../types/env';
 
-const usersApp = new Hono<{ Bindings: Env }>();
+const app = new Hono<{ Bindings: Env }>();
 
 // ユーザーidの一覧を取得する（開発者の確認のため）
-usersApp.get('/', async (c) => {
+app.get('/', async (c) => {
   const db = c.env.DB;
   try {
     const results = (await db.prepare('SELECT * FROM users').all()).results;
@@ -15,7 +15,7 @@ usersApp.get('/', async (c) => {
 });
 
 // ユーザーidをテーブルに追加
-usersApp.post('/', async (c) => {
+app.post('/', async (c) => {
   const { line_user_id } = await c.req.json();
   const db = c.env.DB;
   try {
@@ -28,7 +28,7 @@ usersApp.post('/', async (c) => {
 });
 
 // ユーザー情報をテーブルから削除
-usersApp.delete('/:id', async (c) => {
+app.delete('/:id', async (c) => {
   const id = c.req.param('id');
   const db = c.env.DB;
   try {
@@ -43,4 +43,4 @@ usersApp.delete('/:id', async (c) => {
   }
 });
 
-export default usersApp;
+export default app;
