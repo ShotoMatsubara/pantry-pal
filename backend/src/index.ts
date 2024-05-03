@@ -1,5 +1,6 @@
 import { Hono } from 'hono';
 import usersApp from './api/users';
+import authenticateUser from './api/authenticate';
 import { Env } from './types/env';
 import { cors } from 'hono/cors';
 
@@ -15,5 +16,6 @@ app.use(
 );
 
 app.route('/api/users', usersApp);
+app.route('/api/authenticate', authenticateUser);
 
 export default app;
