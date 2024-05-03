@@ -8,8 +8,6 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import liff from '@line/liff';
 
-export const BACKEND_ROOT_URL = 'https://backend.todo-app.workers.dev';
-
 const Activate: React.FC = () => {
   const [userId, setUserId] = useState('');
   const router = useRouter();
@@ -29,7 +27,7 @@ const Activate: React.FC = () => {
   const createUser = async (e: any) => {
     e.preventDefault();
     try {
-      await axios.post(`${BACKEND_ROOT_URL}/api/users`, {
+      await axios.post(`https://backend.todo-app.workers.dev/api/users`, {
         line_user_id: userId,
       });
       router.push('/activated');
