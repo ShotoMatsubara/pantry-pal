@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Slider from 'react-slick';
+import { useRouter } from 'next/navigation';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Image from 'next/image';
@@ -14,6 +15,7 @@ type Category = {
 
 const Main: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -33,14 +35,15 @@ const Main: React.FC = () => {
     infinite: false,
     speed: 500,
     slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToScroll: 1, // slidesToScrollを1に変更
     initialSlide: 0,
+    centerMode: true,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToScroll: 1, // slidesToScrollを1に変更
         },
       },
       {
@@ -63,7 +66,10 @@ const Main: React.FC = () => {
             <Slider {...sliderSettings}>
               {categories.map((category) => (
                 <div key={category.id} className='px-4'>
-                  <div className='bg-white rounded shadow-md overflow-hidden'>
+                  <button
+                    className='bg-white rounded shadow-md overflow-hidden focus:outline-none'
+                    onClick={() => router.push(`/category/${encodeURIComponent(category.category_name)}`)}
+                  >
                     <Image
                       src={`/categories/${category.id}.jpg`}
                       alt={category.category_name}
@@ -74,7 +80,7 @@ const Main: React.FC = () => {
                     <div className='p-4'>
                       <h2 className='text-lg font-bold'>{category.category_name}</h2>
                     </div>
-                  </div>
+                  </button>
                 </div>
               ))}
             </Slider>
