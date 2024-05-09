@@ -34,26 +34,33 @@ const Main: React.FC = () => {
     dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1, // slidesToScrollを1に変更
-    initialSlide: 0,
-    centerMode: true,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1, // slidesToScrollを1に変更
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
+    slidesToShow: 2,
+    slidesToScroll: 2,
+  };
+
+  const getArgumentCategory = (categoryName: string): string => {
+    switch (categoryName) {
+      case 'staple':
+        return '主食';
+      case 'meat':
+        return '肉';
+      case 'seafood':
+        return '魚介類';
+      case 'vegetable':
+        return '野菜';
+      case 'fruit':
+        return '果物';
+      case 'dairy':
+        return '乳製品';
+      case 'seasoning':
+        return '調味料';
+      case 'beverage':
+        return '飲料';
+      case 'other':
+        return 'その他';
+      default:
+        return '???';
+    }
   };
 
   return (
@@ -63,7 +70,7 @@ const Main: React.FC = () => {
         <div className='relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20'>
           <h1 className='text-xl font-bold mb-6 text-center'>メインページ</h1>
           <div className='mb-8'>
-            <Slider {...sliderSettings}>
+            <Slider {...sliderSettings} lazyLoad='ondemand'>
               {categories.map((category) => (
                 <div key={category.id} className='px-4'>
                   <button
@@ -75,10 +82,10 @@ const Main: React.FC = () => {
                       alt={category.category_name}
                       width={300}
                       height={200}
-                      objectFit='cover'
+                      style={{ objectFit: 'cover' }}
                     />
                     <div className='p-4'>
-                      <h2 className='text-lg font-bold'>{category.category_name}</h2>
+                      <h1 className='text-lg font-bold'>{getArgumentCategory(category.category_name)}</h1>
                     </div>
                   </button>
                 </div>
