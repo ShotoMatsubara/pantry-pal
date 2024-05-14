@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import usersApp from './api/users';
 import authenticateUser from './api/authenticate';
 import getCategories from './api/categories';
+import foods from './api/foods';
 import { Env } from './types/env';
 import { cors } from 'hono/cors';
 
@@ -19,5 +20,6 @@ app.use(
 app.route('/api/users', usersApp);
 app.route('/api/authenticate', authenticateUser);
 app.route('/api/categories', getCategories);
+app.route('/api/foods', foods);
 
 export default app;
