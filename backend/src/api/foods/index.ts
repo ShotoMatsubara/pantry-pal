@@ -3,7 +3,7 @@ import { Env } from '../../types/env';
 
 const app = new Hono<{ Bindings: Env }>();
 
-// user_idとcategory_idと紐づく食材の一覧を取得する
+// ユーザーが持っている食材の一覧を取得する
 app.get('/user/:user_id', async (c) => {
   const db = c.env.DB;
   const user_id = c.req.param('user_id');
@@ -27,6 +27,31 @@ app.get('/user/:user_id', async (c) => {
     .bind(user_id)
     .all();
   return c.json(foods.results);
+});
+
+// ユーザーが持っているカテゴリー別の食材一覧を取得する。
+app.get('/', async (c) => {
+  try {
+    const { user_id, category_id } = await c.req.json();
+
+    // 入力値検証
+    if (!user_id || !category_id) {
+      return c.json({ error: 'user_idまたはcategory_idが入力されていません' }, 400);
+    }
+
+    const query = `
+            SELECT * FROM foods
+            WHERE user_id = ? AND category_id = ?
+        `;
+
+    const statement = c.env.DB.prepare(query);
+    const foods = await statement.bind(user_id, category_id).all();
+
+    return c.json(foods);
+  } catch (error) {
+    console.log(error);
+    return c.json({ error: 'サーバーエラーです' }, 500);
+  }
 });
 
 // レコードの参照
