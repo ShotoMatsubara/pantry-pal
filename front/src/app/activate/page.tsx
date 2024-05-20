@@ -9,11 +9,17 @@ import axios from 'axios';
 import liff from '@line/liff';
 
 const Activate: React.FC = () => {
+  const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_ROOT_URL;
+
   const [userId, setUserId] = useState('');
   const router = useRouter();
+
   useEffect(() => {
     const initializeLiff = async () => {
-      await liff.init({ liffId: '2000778309-LkXlYq6j' });
+      if (!!liffId) {
+        await liff.init({ liffId: liffId });
+      }
       if (!liff.isLoggedIn()) {
         liff.login();
       } else {
@@ -27,7 +33,7 @@ const Activate: React.FC = () => {
   const createUser = async (e: any) => {
     e.preventDefault();
     try {
-      await axios.post(`https://backend.todo-app.workers.dev/api/users`, {
+      await axios.post(`${backendUrl}/api/users`, {
         line_user_id: userId,
       });
       router.push('/activated');
@@ -37,11 +43,10 @@ const Activate: React.FC = () => {
   };
 
   return (
-    <div className='min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12'>
-      <div className='relative py-3 sm:max-w-xl sm:mx-auto'>
-        <div className='absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl'></div>
-        <div className='relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20'>
-          <h1 className='text-3xl font-bold mb-6 text-center'>サインアップ</h1>
+    <div className='min-h-screen bg-gradient-to-b from-blue-100 to-white py-6'>
+      <div className='max-w-md mx-auto px-4'>
+        <div className='bg-white p-6 rounded-lg shadow-md'>
+          <h1 className='text-3xl font-bold mb-6 text-center text-blue-600'>サインアップ</h1>
           <p className='text-gray-600 mb-8 text-center'>
             このアプリケーションは、食材の在庫を簡単に管理することができます。
             <br className='sm:hidden' />
@@ -52,7 +57,7 @@ const Activate: React.FC = () => {
           <div className='flex justify-center'>
             <button
               onClick={createUser}
-              className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+              className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110 focus:outline-none focus:shadow-outline'
             >
               登録する
             </button>

@@ -7,10 +7,15 @@ import axios from 'axios';
 
 const Authenticate = () => {
   const router = useRouter();
+  const liffUrl = process.env.NEXT_PUBLIC_LIFF_ID;
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_ROOT_URL;
 
   useEffect(() => {
     const authenticate = async () => {
-      await liff.init({ liffId: '2000778309-LkXlYq6j' });
+      if (!!liffUrl) {
+        await liff.init({ liffId: liffUrl });
+      }
+
       if (!liff.isLoggedIn()) {
         liff.login();
       }
@@ -18,7 +23,7 @@ const Authenticate = () => {
       const lineUserId = user.userId;
 
       try {
-        const response = await axios.post(`https://backend.todo-app.workers.dev/api/authenticate`, { lineUserId });
+        const response = await axios.post(`${backendUrl}/api/authenticate`, { lineUserId });
         if (response.data.authenticated) {
           // 認証成功の場合は、メインのアプリケーション画面にリダイレクト
           router.push('/main');
