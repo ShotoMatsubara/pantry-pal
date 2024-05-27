@@ -21,7 +21,6 @@ export const generateStaticParams = async () => {
   try {
     const result = await axios.get(`${backendUrl}/api/categories`);
     const categories = result.data.categories;
-    console.log(categories);
 
     return categories.map((category: Category) => ({
       category_name: category.category_name,
