@@ -14,6 +14,19 @@ app.get('/', async (c) => {
   }
 });
 
+// line_user_idに紐づくusersテーブルのIDを取得
+app.post('/get', async (c) => {
+  const { line_user_id } = await c.req.json();
+  console.log(line_user_id);
+  const db = c.env.DB;
+  try {
+    const result = await db.prepare(`SELECT id FROM users WHERE line_user_id = ?`).bind(line_user_id).first();
+    return c.json(result);
+  } catch {
+    return c.json({ message: 'ユーザーの取得に失敗しました' });
+  }
+});
+
 // ユーザーidをテーブルに追加
 app.post('/', async (c) => {
   const { line_user_id } = await c.req.json();

@@ -3,6 +3,7 @@ import usersApp from './api/users';
 import authenticateUser from './api/authenticate';
 import getCategories from './api/categories';
 import foods from './api/foods';
+import quantityUnits from './api/quantity_units';
 import { Env } from './types/env';
 import { cors } from 'hono/cors';
 
@@ -21,5 +22,6 @@ app.route('/api/users', usersApp);
 app.route('/api/authenticate', authenticateUser);
 app.route('/api/categories', getCategories);
 app.route('/api/foods', foods);
+app.route('/api/quantity_units', quantityUnits);
 
 export default app;

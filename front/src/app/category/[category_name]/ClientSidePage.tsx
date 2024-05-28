@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { getArgumentCategory } from '@/app/main/category';
+import { getArgumentCategory } from '@/app/main/main';
 
 const ClientSidePage = (props: { categoryName: string }) => {
   const { categoryName } = props;
@@ -20,7 +20,7 @@ const ClientSidePage = (props: { categoryName: string }) => {
           </button>
         </div>
         <div className='bg-white p-6 rounded-lg shadow-md'>
-          <h1 className='text-2xl font-bold mb-6 text-center text-blue-600'>{getArgumentCategory(categoryName)}</h1>
+          <h1 className='text-2xl font-bold mb-6 text-center text-blue-600'>{getArgumentCategory(categoryName)}一覧</h1>
           <div className='mb-8'>
             {/* 食材一覧を表示するコンポーネントや処理をここに追加 */}
             <p className='text-gray-600'>ここに食材一覧が表示されます。</p>
