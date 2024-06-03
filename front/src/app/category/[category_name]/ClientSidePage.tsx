@@ -84,7 +84,7 @@ const ClientSidePage = (props: { categoryName: string }) => {
 
             // user_idとcategory_idが両方存在する場合にのみ、食材の一覧を取得する
             if (parsedUserId && parsedCategoryId) {
-              const responseFoods = await axios.post(`${backendUrl}/api/foods`, {
+              const responseFoods = await axios.post(`${backendUrl}/api/foods/get`, {
                 user_id: parsedUserId,
                 category_id: parsedCategoryId,
               });
