@@ -46,6 +46,7 @@ const NewStockForm = () => {
     e.preventDefault();
 
     const formData = {
+      user_id: Number(userId),
       category_id: categoryId,
       food_name: foodName,
       quantity_value: quantityValue,
@@ -56,7 +57,7 @@ const NewStockForm = () => {
 
     try {
       const response = await axios.post(`${backendUrl}/api/foods`, formData);
-      console.log('食材の登録に成功しました');
+      console.log(response);
       router.push('./success');
     } catch (error) {
       console.log('Error:', error);
