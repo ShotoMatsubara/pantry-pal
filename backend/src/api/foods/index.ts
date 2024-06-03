@@ -31,7 +31,7 @@ app.get('/user/:user_id', async (c) => {
 
 // ユーザーが持っているカテゴリー別の食材一覧を取得する。
 // TODO：すべてこの書き方に統一させる
-app.post('/', async (c) => {
+app.post('/get', async (c) => {
   try {
     const { user_id, category_id } = await c.req.json();
 
