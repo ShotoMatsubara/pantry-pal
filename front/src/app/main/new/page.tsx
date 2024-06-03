@@ -22,17 +22,6 @@ const NewStockForm = () => {
   const [expirationType, setExpirationType] = React.useState<string>('best_before');
   const [expirationDate, setExpirationDate] = React.useState<string>();
 
-  //コンソールで見とく
-  React.useEffect(() => {
-    console.log('userId:', userId);
-    console.log('categoryId:', categoryId);
-    console.log('foodName:', foodName);
-    console.log('quantityValue:', quantityValue);
-    console.log('quantityUnitId:', quantityUnitId);
-    console.log('expirationType:', expirationType);
-    console.log('expirationDate:', expirationDate);
-  }, [userId, categoryId, foodName, quantityValue, quantityUnitId, expirationType, expirationDate]);
-
   // 必要な値を取得する
   React.useEffect(() => {
     const getCategories = async () => {
@@ -57,7 +46,6 @@ const NewStockForm = () => {
     e.preventDefault();
 
     const formData = {
-      user_id: Number(userId),
       category_id: categoryId,
       food_name: foodName,
       quantity_value: quantityValue,

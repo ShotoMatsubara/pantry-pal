@@ -31,7 +31,7 @@ app.get('/user/:user_id', async (c) => {
 
 // ユーザーが持っているカテゴリー別の食材一覧を取得する。
 // TODO：すべてこの書き方に統一させる
-app.get('/', async (c) => {
+app.post('/', async (c) => {
   try {
     const { user_id, category_id } = await c.req.json();
 
@@ -41,14 +41,16 @@ app.get('/', async (c) => {
     }
 
     const query = `
-            SELECT * FROM foods
-            WHERE user_id = ? AND category_id = ?
+            SELECT foods.*, quantity_units.quantity_unit_name
+            FROM foods
+            JOIN quantity_units ON foods.quantity_unit_id = quantity_units.id
+            WHERE foods.user_id = ? AND foods.category_id = ?
         `;
 
     const statement = c.env.DB.prepare(query);
     const foods = await statement.bind(user_id, category_id).all();
 
-    return c.json(foods);
+    return c.json(foods.results);
   } catch (error) {
     console.log(error);
     return c.json({ error: 'サーバーエラーです' }, 500);
