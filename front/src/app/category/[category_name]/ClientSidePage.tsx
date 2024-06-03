@@ -29,6 +29,7 @@ const ClientSidePage = (props: { categoryName: string }) => {
   const [categoryId, setCategoryId] = React.useState();
   const [quantityUnits, setQuantityUnits] = React.useState();
   const [foods, setFoods] = React.useState<Food[]>();
+  console.log(foods);
 
   // モーダルのステイト
   const [editModalState, setEditModalState] = React.useState<{ isOpen: boolean; foodId: number | null }>({
@@ -44,7 +45,7 @@ const ClientSidePage = (props: { categoryName: string }) => {
         const parsedUserId = parseInt(localUserId, 10);
 
         if (categoryId && parsedUserId) {
-          const responseFoods = await axios.post(`${backendUrl}/api/foods`, {
+          const responseFoods = await axios.post(`${backendUrl}/api/foods/get`, {
             user_id: parsedUserId,
             category_id: categoryId,
           });
