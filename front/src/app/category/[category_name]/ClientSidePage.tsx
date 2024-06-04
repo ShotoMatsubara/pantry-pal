@@ -44,7 +44,7 @@ const ClientSidePage = (props: { categoryName: string }) => {
         const parsedUserId = parseInt(localUserId, 10);
 
         if (categoryId && parsedUserId) {
-          const responseFoods = await axios.post(`${backendUrl}/api/foods`, {
+          const responseFoods = await axios.post(`${backendUrl}/api/foods/get`, {
             user_id: parsedUserId,
             category_id: categoryId,
           });
@@ -115,8 +115,19 @@ const ClientSidePage = (props: { categoryName: string }) => {
     setEditModalState({ isOpen: false, foodId: null });
   };
 
-  const onDelete = (foodId: number) => {
-    console.log('食材の削除');
+  const onDelete = async (foodId: number) => {
+    try {
+      const response = await axios.delete(`${backendUrl}/api/foods/${foodId}`);
+      if (response.status === 200) {
+        alert('食材の削除に成功しました');
+        // 削除したら再度食材一覧を取得する。
+        fetchFoods();
+      } else {
+        alert(`予期しないステータスコード: ${response.status}`);
+      }
+    } catch (error) {
+      alert(`食材の削除に失敗しました: ${error}`);
+    }
   };
 
   return (
