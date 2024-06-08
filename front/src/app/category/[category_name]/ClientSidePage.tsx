@@ -8,7 +8,6 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 
 import EditFoodModal from './EditFoodModal';
 import { useNotificationContext } from '@/contexts/NotificationContext';
-import Notification from '@/components/Notification';
 
 import { Category } from '@/app/main/page';
 
@@ -137,7 +136,6 @@ const ClientSidePage = (props: { categoryName: string }) => {
     <div className='min-h-screen bg-gradient-to-b from-blue-100 to-white py-6'>
       <div className='max-w-md mx-auto px-4'>
         <div className='flex justify-start mb-6'>
-          <Notification />
           <button
             className='bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full shadow-md transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110'
             onClick={() => router.push('/main')}
@@ -154,11 +152,13 @@ const ClientSidePage = (props: { categoryName: string }) => {
                   <div>
                     <h3 className='text-lg font-semibold'>{food.food_name}</h3>
                     <p className='text-gray-600'>
-                      数量: {food.quantity_value}
+                      {food.quantity_value}
                       {food.quantity_unit_name ?? ''}
                     </p>
-                    <p className='text-gray-600'>期限種別: {getArgumentExpirationType(food.expiration_type)}</p>
-                    <p className='text-gray-600'>期限日: {food.expiration_date}</p>
+                    {getArgumentExpirationType(food.expiration_type)}
+                    <p className='text-gray-600'>
+                      {getArgumentExpirationType(food.expiration_type)}: {food.expiration_date}
+                    </p>
                   </div>
                   <div>
                     <button

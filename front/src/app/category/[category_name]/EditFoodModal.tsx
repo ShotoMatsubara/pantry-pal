@@ -6,7 +6,6 @@ import { Dialog, Transition } from '@headlessui/react';
 
 import { fetchCategories, getArgumentCategory, fetchQuantityUnits } from '../../main/main';
 import { useNotificationContext } from '../../../contexts/NotificationContext';
-import Notification from '@/components/Notification';
 
 import { Category } from '../../main/page';
 
@@ -120,8 +119,6 @@ const EditFoodModal = (props: Props) => {
                     <div className='mt-2'>
                       <form onSubmit={(e) => handleSubmit(e)}>
                         <div className='mb-4'>
-                          <Notification />
-
                           <label htmlFor='category_id' className='block mb-2 font-bold text-gray-700'>
                             カテゴリー
                           </label>
