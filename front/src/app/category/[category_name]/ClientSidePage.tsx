@@ -7,6 +7,8 @@ import { getArgumentCategory } from '@/app/main/main';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
 import EditFoodModal from './EditFoodModal';
+import { useNotificationContext } from '@/contexts/NotificationContext';
+import Notification from '@/components/Notification';
 
 import { Category } from '@/app/main/page';
 
@@ -23,6 +25,7 @@ type Food = {
 };
 
 const ClientSidePage = (props: { categoryName: string }) => {
+  const { showMessage } = useNotificationContext();
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_ROOT_URL;
   const router = useRouter();
   const { categoryName } = props;
@@ -119,14 +122,14 @@ const ClientSidePage = (props: { categoryName: string }) => {
     try {
       const response = await axios.delete(`${backendUrl}/api/foods/${foodId}`);
       if (response.status === 200) {
-        alert('食材の削除に成功しました');
+        showMessage('食材を削除しました。', 'success');
         // 削除したら再度食材一覧を取得する。
         fetchFoods();
       } else {
-        alert(`予期しないステータスコード: ${response.status}`);
+        showMessage(`予期しないステータスコード: ${response.status}`, 'error');
       }
     } catch (error) {
-      alert(`食材の削除に失敗しました: ${error}`);
+      showMessage(`食材の削除に失敗しました: ${error}`, 'error');
     }
   };
 
@@ -134,6 +137,7 @@ const ClientSidePage = (props: { categoryName: string }) => {
     <div className='min-h-screen bg-gradient-to-b from-blue-100 to-white py-6'>
       <div className='max-w-md mx-auto px-4'>
         <div className='flex justify-start mb-6'>
+          <Notification />
           <button
             className='bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full shadow-md transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110'
             onClick={() => router.push('/main')}
