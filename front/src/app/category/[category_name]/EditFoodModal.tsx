@@ -1,11 +1,12 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import * as React from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
 import { fetchCategories, getArgumentCategory, fetchQuantityUnits } from '../../main/main';
+import { useNotificationContext } from '../../../contexts/NotificationContext';
+import Notification from '@/components/Notification';
 
 import { Category } from '../../main/page';
 
@@ -17,6 +18,7 @@ type Props = {
 };
 
 const EditFoodModal = (props: Props) => {
+  const { showMessage } = useNotificationContext();
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_ROOT_URL;
   const [categories, setCategories] = React.useState<Category[]>();
   const [quantityUnits, setQuantityUnits] = React.useState<[{ id: number; quantity_unit_name: string }]>();
@@ -79,12 +81,12 @@ const EditFoodModal = (props: Props) => {
 
     try {
       await axios.put(`${backendUrl}/api/foods/${props.foodId}`, formData);
-      alert('食材の変更に成功しました');
+      showMessage('編集が完了しました', 'success');
       // 食材の変更に成功したら、食材をフェッチしなおす。
       props.fetchFoods();
     } catch (e) {
       // TODO: フローティングメッセージを表示させる。
-      console.log('食材の変更に失敗しました');
+      showMessage('編集に失敗しました', 'error');
     }
   };
 
@@ -118,6 +120,8 @@ const EditFoodModal = (props: Props) => {
                     <div className='mt-2'>
                       <form onSubmit={(e) => handleSubmit(e)}>
                         <div className='mb-4'>
+                          <Notification />
+
                           <label htmlFor='category_id' className='block mb-2 font-bold text-gray-700'>
                             カテゴリー
                           </label>
