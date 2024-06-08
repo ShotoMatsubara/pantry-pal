@@ -1,14 +1,13 @@
 import { useState } from 'react';
 
-type MessageType = 'success' | 'error';
+export type NotificationType = 'success' | 'error';
 
-// TODO: 共通で使用するフローティングメッセージを作成する
 const useNotification = () => {
   const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState<MessageType>('success');
+  const [messageType, setMessageType] = useState<NotificationType>('success');
   const [showNotification, setShowNotification] = useState(false);
 
-  const showMessage = (msg: string, type: MessageType) => {
+  const showMessage = (msg: string, type: NotificationType) => {
     setMessage(msg);
     setMessageType(type);
     setShowNotification(true);
