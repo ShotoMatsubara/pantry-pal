@@ -8,7 +8,7 @@ const Notification = () => {
   return (
     <div
       aria-live='assertive'
-      className='fixed inset-0 flex items-start px-4 py-6 pointer-events-none sm:p-6 sm:items-start'
+      className='fixed inset-0 flex items-start px-4 py-6 pointer-events-none sm:p-6 sm:items-start z-50'
     >
       <div className='w-full flex flex-col items-center space-y-4 sm:items-start'>
         <Transition
@@ -46,18 +46,6 @@ const Notification = () => {
                 </div>
                 <div className='ml-3 w-0 flex-1 pt-0.5'>
                   <p className='text-sm font-medium text-gray-900'>{message}</p>
-                </div>
-                <div className='ml-4 flex-shrink-0 flex'>
-                  <button className='bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
-                    <span className='sr-only'>Close</span>
-                    <svg className='h-5 w-5' fill='currentColor' viewBox='0 0 20 20' aria-hidden='true'>
-                      <path
-                        fillRule='evenodd'
-                        d='M10 9a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1zm0 4a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z'
-                        clipRule='evenodd'
-                      />
-                    </svg>
-                  </button>
                 </div>
               </div>
             </div>
