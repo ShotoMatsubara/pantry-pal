@@ -45,7 +45,7 @@ const Main: React.FC = () => {
             className='bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-full shadow-md transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110'
             onClick={() => router.push('./delete_user')}
           >
-            ユーザーの削除
+            サインアウト
           </button>
         </div>
         <div className='bg-white p-6 rounded-lg shadow-md'>
