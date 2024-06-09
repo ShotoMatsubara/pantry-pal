@@ -36,8 +36,8 @@ const DeleteUserPage = () => {
     <div className='min-h-screen bg-gradient-to-b from-red-100 to-white py-6'>
       <div className='max-w-md mx-auto px-4'>
         <div className='bg-white p-6 rounded-lg shadow-md'>
-          <h1 className='text-3xl font-bold mb-6 text-center text-red-600'>ユーザーの削除</h1>
-          <p className='text-gray-600 mb-8 text-center'>ユーザーを削除しますか？この操作は元に戻せません。</p>
+          <h1 className='text-3xl font-bold mb-6 text-center text-red-600'>サインアウト</h1>
+          <p className='text-gray-600 mb-8 text-center'>サインアウトを行いますか？この操作は元に戻せません。</p>
           <div className='flex justify-between'>
             <button
               onClick={() => {
@@ -51,7 +51,7 @@ const DeleteUserPage = () => {
               onClick={handleDelete}
               className='bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110 focus:outline-none focus:shadow-outline'
             >
-              削除する
+              サインアウト
             </button>
           </div>
         </div>
