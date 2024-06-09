@@ -34,12 +34,18 @@ const Main: React.FC = () => {
   return (
     <div className='min-h-screen bg-gradient-to-b from-blue-100 to-white py-6'>
       <div className='max-w-md mx-auto px-4'>
-        <div className='flex justify-start mb-6'>
+        <div className='flex justify-between mb-6'>
           <button
             className='bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full shadow-md transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110'
             onClick={() => router.push('./new')}
           >
             食材の追加
+          </button>
+          <button
+            className='bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-full shadow-md transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110'
+            onClick={() => router.push('./delete_user')}
+          >
+            サインアウト
           </button>
         </div>
         <div className='bg-white p-6 rounded-lg shadow-md'>

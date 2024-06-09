@@ -155,7 +155,6 @@ const ClientSidePage = (props: { categoryName: string }) => {
                       {food.quantity_value}
                       {food.quantity_unit_name ?? ''}
                     </p>
-                    {getArgumentExpirationType(food.expiration_type)}
                     <p className='text-gray-600'>
                       {getArgumentExpirationType(food.expiration_type)}: {food.expiration_date}
                     </p>
