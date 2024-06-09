@@ -40,19 +40,26 @@ app.post('/', async (c) => {
   }
 });
 
-// ユーザー情報をテーブルから削除
+// ユーザー削除のエンドポイント
 app.delete('/:id', async (c) => {
   const id = c.req.param('id');
   const db = c.env.DB;
-  try {
-    const result = await db.prepare('DELETE FROM users WHERE id = ?').bind(id).run();
 
-    if (result.error) {
-      return c.json({ message: 'ユーザーが見つかりません' }, 400);
+  try {
+    // foodsテーブルから該当ユーザーのデータを削除
+    const deleteFoodsResult = await db.prepare('DELETE FROM foods WHERE user_id = ?').bind(id).run();
+    if (!deleteFoodsResult.success) {
+      throw new Error('ユーザーに紐づく食材の削除に失敗しました');
     }
-    return c.json({ message: 'ユーザーの削除に成功しました' }, 200);
-  } catch (e) {
-    return c.json({ err: e }, 500);
+    // usersテーブルからユーザーを削除
+    const deleteUserResult = await db.prepare('DELETE FROM users WHERE id = ?').bind(id).run();
+    if (!deleteUserResult.success) {
+      throw new Error('ユーザーの削除に失敗しました。');
+    }
+
+    return c.json({ message: 'ユーザーの削除が完了しました' });
+  } catch (error) {
+    return c.json({ message: 'ユーザーの削除に失敗しました', error }, 500);
   }
 });
 
