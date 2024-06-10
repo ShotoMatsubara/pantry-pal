@@ -3,8 +3,10 @@
 import React from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { getArgumentCategory } from '@/app/main/main';
+import { getArgumentCategory } from '@/lib/categories';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+
+import backendUrl from '@/config/backendUrl';
 
 import EditFoodModal from './EditFoodModal';
 import { useNotificationContext } from '@/contexts/NotificationContext';
@@ -25,7 +27,6 @@ type Food = {
 
 const ClientSidePage = (props: { categoryName: string }) => {
   const { showMessage } = useNotificationContext();
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_ROOT_URL;
   const router = useRouter();
   const { categoryName } = props;
   const [categoryId, setCategoryId] = React.useState();

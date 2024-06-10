@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
-import { getArgumentCategory } from './main';
+import { getArgumentCategory } from '@/lib/categories';
 
 export type Category = {
   id: number;

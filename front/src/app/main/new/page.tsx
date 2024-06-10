@@ -5,7 +5,8 @@ import axios from 'axios';
 import * as React from 'react';
 
 import { Category } from '../page';
-import { fetchCategories, getArgumentCategory, fetchQuantityUnits } from '../main';
+import { getArgumentCategory, fetchCategories } from '@/lib/categories';
+import { fetchQuantityUnits } from '@/lib/quantityUnits';
 
 const NewStockForm = () => {
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_ROOT_URL;

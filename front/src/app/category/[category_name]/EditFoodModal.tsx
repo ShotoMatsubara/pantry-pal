@@ -4,7 +4,10 @@ import axios from 'axios';
 import * as React from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
-import { fetchCategories, getArgumentCategory, fetchQuantityUnits } from '../../main/main';
+import backendUrl from '@/config/backendUrl';
+
+import { getArgumentCategory, fetchCategories } from '@/lib/categories';
+import { fetchQuantityUnits } from '@/lib/quantityUnits';
 import { useNotificationContext } from '../../../contexts/NotificationContext';
 
 import { Category } from '../../main/page';
@@ -18,7 +21,6 @@ type Props = {
 
 const EditFoodModal = (props: Props) => {
   const { showMessage } = useNotificationContext();
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_ROOT_URL;
   const [categories, setCategories] = React.useState<Category[]>();
   const [quantityUnits, setQuantityUnits] = React.useState<[{ id: number; quantity_unit_name: string }]>();
 

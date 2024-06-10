@@ -3,14 +3,14 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import liff from '@line/liff';
 
+import backendUrl from '@/config/backendUrl';
+
 const Activate: React.FC = () => {
   const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_ROOT_URL;
 
   const [userId, setUserId] = useState('');
   const router = useRouter();

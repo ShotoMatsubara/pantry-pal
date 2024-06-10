@@ -5,10 +5,11 @@ import { useRouter } from 'next/navigation';
 import liff from '@line/liff';
 import axios from 'axios';
 
+import backendUrl from '@/config/backendUrl';
+
 const Authenticate = () => {
   const router = useRouter();
   const liffUrl = process.env.NEXT_PUBLIC_LIFF_ID;
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_ROOT_URL;
 
   useEffect(() => {
     const authenticate = async () => {
