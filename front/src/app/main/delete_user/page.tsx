@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import React from 'react';
 
+import backendUrl from '@/config/backendUrl';
 import { useNotificationContext } from '@/contexts/NotificationContext';
 
 const DeleteUserPage = () => {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_ROOT_URL;
   const { showMessage } = useNotificationContext();
   const router = useRouter();
   const [userId, setUserId] = React.useState<string | null>();

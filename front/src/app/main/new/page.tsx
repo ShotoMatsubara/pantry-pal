@@ -4,12 +4,13 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import * as React from 'react';
 
-import { Category } from '../page';
+import backendUrl from '@/config/backendUrl';
 import { getArgumentCategory, fetchCategories } from '@/lib/categories';
 import { fetchQuantityUnits } from '@/lib/quantityUnits';
 
+import { Category } from '../page';
+
 const NewStockForm = () => {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_ROOT_URL;
   const router = useRouter();
   const [categories, setCategories] = React.useState<Category[]>();
   const [quantityUnits, setQuantityUnits] = React.useState<[{ id: number; quantity_unit_name: string }]>();
