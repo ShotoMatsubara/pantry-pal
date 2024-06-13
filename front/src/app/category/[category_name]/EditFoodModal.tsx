@@ -10,7 +10,7 @@ import { getArgumentCategory, fetchCategories } from '@/lib/categories';
 import { fetchQuantityUnits } from '@/lib/quantityUnits';
 import { useNotificationContext } from '../../../contexts/NotificationContext';
 
-import { Category } from '../../main/page';
+import { Category, EditFoodFormData, ExpirationType, QuantityUnit } from '@/types';
 
 type Props = {
   foodId: number;
@@ -22,14 +22,14 @@ type Props = {
 const EditFoodModal = (props: Props) => {
   const { showMessage } = useNotificationContext();
   const [categories, setCategories] = React.useState<Category[]>();
-  const [quantityUnits, setQuantityUnits] = React.useState<[{ id: number; quantity_unit_name: string }]>();
+  const [quantityUnits, setQuantityUnits] = React.useState<QuantityUnit[]>();
 
   // 登録に必要なstate
   const [categoryId, setCategoryId] = React.useState<number>();
   const [foodName, setFoodName] = React.useState<string>();
   const [quantityValue, setQuantityValue] = React.useState<number>();
   const [quantityUnitId, setQuantityUnitId] = React.useState<number>();
-  const [expirationType, setExpirationType] = React.useState<string>();
+  const [expirationType, setExpirationType] = React.useState<ExpirationType>();
   const [expirationDate, setExpirationDate] = React.useState<string>();
 
   const [isShowModal, setIsShowModal] = React.useState<boolean>(false);
@@ -37,12 +37,12 @@ const EditFoodModal = (props: Props) => {
   // 必要な値を取得する
   React.useEffect(() => {
     const getCategories = async () => {
-      const categories = await fetchCategories();
+      const categories: Category[] = await fetchCategories();
       setCategories(categories);
     };
 
     const getQuantityUnits = async () => {
-      const quantityUnits = await fetchQuantityUnits();
+      const quantityUnits: QuantityUnit[] = await fetchQuantityUnits();
       setQuantityUnits(quantityUnits);
     };
 
@@ -62,7 +62,7 @@ const EditFoodModal = (props: Props) => {
         // 必要なステイトが準備できたらモーダルを表示させる
         setIsShowModal(true);
       } catch (error) {
-        console.log('データの取得に失敗しました');
+        showMessage('データの取得に失敗しました', 'error');
       }
     };
     fetchFoodData();
@@ -71,7 +71,12 @@ const EditFoodModal = (props: Props) => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const formData = {
+    if (!categoryId || !foodName || !quantityValue || !quantityUnitId || !expirationType || !expirationDate) {
+      showMessage('入力値が不正です', 'error');
+      return;
+    }
+
+    const formData: EditFoodFormData = {
       category_id: categoryId,
       food_name: foodName,
       quantity_value: quantityValue,
@@ -190,7 +195,7 @@ const EditFoodModal = (props: Props) => {
                           <select
                             id='expiration_type'
                             className='w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none'
-                            onChange={(e) => setExpirationType(e.target.value)}
+                            onChange={(e: any) => setExpirationType(e.target.value)}
                             value={expirationType}
                           >
                             <option value='best_before'>賞味期限</option>

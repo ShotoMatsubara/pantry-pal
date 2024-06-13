@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { Category } from '@/app/main/page';
 import React from 'react';
 
 import backendUrl from '@/config/backendUrl';
 import ClientSidePage from './ClientSidePage';
+
+import { Category } from '@/types';
 
 type CategoryProps = {
   params: {

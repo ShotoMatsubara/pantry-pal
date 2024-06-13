@@ -5,9 +5,11 @@ import { useRouter } from 'next/navigation';
 import liff from '@line/liff';
 import axios from 'axios';
 
+import { useNotificationContext } from '@/contexts/NotificationContext';
 import backendUrl from '@/config/backendUrl';
 
 const Authenticate = () => {
+  const { showMessage } = useNotificationContext();
   const router = useRouter();
   const liffUrl = process.env.NEXT_PUBLIC_LIFF_ID;
 
@@ -28,6 +30,7 @@ const Authenticate = () => {
         if (response.data.authenticated) {
           // ローカルストレージにuserIdを保存する
           localStorage.setItem('userId', response.data.id);
+          showMessage('認証完了', 'success');
           // 認証成功の場合は、メインのアプリケーション画面にリダイレクト
           router.push('/main');
         } else {
@@ -35,7 +38,7 @@ const Authenticate = () => {
           router.push('/activate');
         }
       } catch (error) {
-        console.error('認証エラー:', error);
+        showMessage('認証できませんでした', 'error');
         // エラーハンドリング
       }
     };

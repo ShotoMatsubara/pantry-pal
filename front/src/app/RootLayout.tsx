@@ -1,4 +1,4 @@
-'use client'; // クライアントコンポーネントとして指定
+'use client';
 
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
+    <html lang='ja'>
       <body className={inter.className}>
         <NotificationProvider>
           {children}

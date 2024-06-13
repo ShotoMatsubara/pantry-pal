@@ -11,26 +11,13 @@ import backendUrl from '@/config/backendUrl';
 import EditFoodModal from './EditFoodModal';
 import { useNotificationContext } from '@/contexts/NotificationContext';
 
-import { Category } from '@/app/main/page';
-
-type Food = {
-  id: number;
-  user_id: number;
-  category_id: number;
-  food_name: string;
-  quantity_value: number;
-  quantity_unit_id: number;
-  expiration_type: 'best_before' | 'expiration_date';
-  expiration_date: string | null;
-  quantity_unit_name: string;
-};
+import { Category, Food } from '@/types';
 
 const ClientSidePage = (props: { categoryName: string }) => {
   const { showMessage } = useNotificationContext();
   const router = useRouter();
   const { categoryName } = props;
   const [categoryId, setCategoryId] = React.useState();
-  const [quantityUnits, setQuantityUnits] = React.useState();
   const [foods, setFoods] = React.useState<Food[]>();
 
   // モーダルのステイト
@@ -57,7 +44,7 @@ const ClientSidePage = (props: { categoryName: string }) => {
         router.push('/authenticate');
       }
     } catch (error) {
-      console.log(error);
+      showMessage('食材の取得に失敗しました', 'error');
     }
   };
 
@@ -77,11 +64,6 @@ const ClientSidePage = (props: { categoryName: string }) => {
           const category = categories.find((c: Category) => c.category_name === categoryName);
           setCategoryId(category.id);
 
-          // quantity_unit_idを取得する
-          const UnitResult = await axios.get(`${backendUrl}/api/quantity_units`);
-          const quantityUnits = UnitResult.data.quantity_units;
-          setQuantityUnits(quantityUnits);
-
           if (category) {
             const parsedCategoryId = category.id;
 
@@ -99,7 +81,7 @@ const ClientSidePage = (props: { categoryName: string }) => {
           router.push('/authenticate');
         }
       } catch (error) {
-        console.log(error);
+        showMessage('データの取得に失敗しました', 'error');
       }
     };
 

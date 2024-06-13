@@ -7,13 +7,15 @@ import * as React from 'react';
 import backendUrl from '@/config/backendUrl';
 import { getArgumentCategory, fetchCategories } from '@/lib/categories';
 import { fetchQuantityUnits } from '@/lib/quantityUnits';
+import { useNotificationContext } from '@/contexts/NotificationContext';
 
-import { Category } from '../page';
+import { Category, CreateFoodFormData, ExpirationType, QuantityUnit } from '@/types';
 
 const NewStockForm = () => {
+  const { showMessage } = useNotificationContext();
   const router = useRouter();
   const [categories, setCategories] = React.useState<Category[]>();
-  const [quantityUnits, setQuantityUnits] = React.useState<[{ id: number; quantity_unit_name: string }]>();
+  const [quantityUnits, setQuantityUnits] = React.useState<QuantityUnit[]>();
 
   // 登録に必要なstate
   const [userId, setUserId] = React.useState<string>();
@@ -21,18 +23,18 @@ const NewStockForm = () => {
   const [foodName, setFoodName] = React.useState<string>();
   const [quantityValue, setQuantityValue] = React.useState<number>();
   const [quantityUnitId, setQuantityUnitId] = React.useState<number>(1);
-  const [expirationType, setExpirationType] = React.useState<string>('best_before');
+  const [expirationType, setExpirationType] = React.useState<ExpirationType>('best_before');
   const [expirationDate, setExpirationDate] = React.useState<string>();
 
   // 必要な値を取得する
   React.useEffect(() => {
     const getCategories = async () => {
-      const categories = await fetchCategories(); // fetchCategories関数は非同期関数なのでawaitを用いてPromiseを解決するまで待たせる。
+      const categories: Category[] = await fetchCategories(); // fetchCategories関数は非同期関数なのでawaitを用いてPromiseを解決するまで待たせる。
       setCategories(categories);
     };
 
     const getQuantityUnits = async () => {
-      const quantityUnits = await fetchQuantityUnits();
+      const quantityUnits: QuantityUnit[] = await fetchQuantityUnits();
       setQuantityUnits(quantityUnits);
     };
     getCategories();
@@ -47,7 +49,20 @@ const NewStockForm = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const formData = {
+    if (
+      !userId ||
+      !categoryId ||
+      !foodName ||
+      !quantityValue ||
+      !quantityUnitId ||
+      !expirationType ||
+      !expirationDate
+    ) {
+      showMessage('入力値が不正です', 'error');
+      return;
+    }
+
+    const formData: CreateFoodFormData = {
       user_id: Number(userId),
       category_id: categoryId,
       food_name: foodName,
@@ -58,11 +73,11 @@ const NewStockForm = () => {
     };
 
     try {
-      const response = await axios.post(`${backendUrl}/api/foods`, formData);
-      console.log(response);
+      await axios.post(`${backendUrl}/api/foods`, formData);
+      showMessage('食材が追加されました', 'success');
       router.push('./success');
     } catch (error) {
-      console.log('Error:', error);
+      showMessage('食材の追加に失敗しました', 'error');
     }
   };
 
@@ -145,7 +160,7 @@ const NewStockForm = () => {
                 <select
                   id='expiration_type'
                   className='w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none'
-                  onChange={(e) => setExpirationType(e.target.value)}
+                  onChange={(e: any) => setExpirationType(e.target.value)}
                   value={expirationType}
                 >
                   <option value='best_before'>賞味期限</option>
