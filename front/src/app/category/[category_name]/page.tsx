@@ -1,7 +1,10 @@
 import axios from 'axios';
-import { Category } from '@/app/main/page';
 import React from 'react';
+
+import backendUrl from '@/config/backendUrl';
 import ClientSidePage from './ClientSidePage';
+
+import { Category } from '@/types';
 
 type CategoryProps = {
   params: {
@@ -17,7 +20,6 @@ const CategoryPage = async ({ params }: CategoryProps) => {
 export default CategoryPage;
 
 export const generateStaticParams = async () => {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_ROOT_URL;
   try {
     const result = await axios.get(`${backendUrl}/api/categories`);
     const categories = result.data.categories;
