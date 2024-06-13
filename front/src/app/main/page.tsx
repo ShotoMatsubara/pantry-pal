@@ -1,34 +1,24 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
-import { getArgumentCategory } from './main';
+import { getArgumentCategory, fetchCategories } from '@/lib/categories';
 
-export type Category = {
-  id: number;
-  category_name: string;
-};
-
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND_ROOT_URL;
+import { Category } from '@/types';
 
 const Main: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const router = useRouter();
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(`${backendUrl}/api/categories`);
-        setCategories(response.data.categories);
-      } catch (e) {
-        console.log('カテゴリーの取得に失敗しました', e);
-      }
+    const getCategories = async () => {
+      const categories: Category[] = await fetchCategories();
+      setCategories(categories);
     };
 
-    fetchCategories();
+    getCategories();
   }, []);
 
   return (

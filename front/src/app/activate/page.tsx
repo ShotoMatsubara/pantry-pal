@@ -3,14 +3,16 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import liff from '@line/liff';
 
+import backendUrl from '@/config/backendUrl';
+import { useNotificationContext } from '@/contexts/NotificationContext';
+
 const Activate: React.FC = () => {
+  const { showMessage } = useNotificationContext();
   const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_ROOT_URL;
 
   const [userId, setUserId] = useState('');
   const router = useRouter();
@@ -36,9 +38,10 @@ const Activate: React.FC = () => {
       await axios.post(`${backendUrl}/api/users`, {
         line_user_id: userId,
       });
+      showMessage('登録が完了しました', 'success');
       router.push('/activated');
     } catch (e) {
-      console.log(e);
+      showMessage('登録に失敗しました', 'error');
     }
   };
 
