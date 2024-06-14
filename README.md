@@ -3,8 +3,9 @@
 NextJS の練習で作成した、LINE 公式アカウント上で動作する必要最低限の機能を持った食材在庫管理ができるアプリケーションです。
 
 ## LINE 公式アカウント
+LINE公式アカウントを追加する場合はLINEからQRコードを読み取ってください
 
-![Pantry-pal Logo](line_qr_code.png)
+<image src='line_qr_code.png' width='150px'>
 
 ## 特徴
 
