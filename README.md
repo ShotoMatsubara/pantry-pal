@@ -4,7 +4,7 @@ NextJS の練習で作成した、LINE 公式アカウント上で動作する�
 
 ## LINE 公式アカウント
 
-![Pantry-pal Logo](./スクリーンショット 2024-06-14 9.24.39.png)
+![Pantry-pal Logo](line_qr_code.png)
 
 ## 特徴
 
